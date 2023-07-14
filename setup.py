@@ -4,7 +4,7 @@ with open("README.md", "r") as txt:
     long_description = txt.read()
 
 setuptools.setup(
-    name='vanitaspy',
+    name='vanitas-antispam',
     version='1.0.0',
     description='AntiSpam Wrapper for Vanitas',
     long_description=long_description,
