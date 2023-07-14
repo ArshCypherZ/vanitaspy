@@ -5,7 +5,7 @@ with open("README.md", "r") as txt:
 
 setuptools.setup(
     name='vanitas-antispam',
-    version='1.0.0',
+    version='1.0.1',
     description='AntiSpam Wrapper for Vanitas',
     long_description=long_description,
     long_description_content_type="text/markdown",
