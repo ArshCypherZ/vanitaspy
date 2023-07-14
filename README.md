@@ -2,7 +2,7 @@
 
 
 ```
-from vanitas-antispam import User
+from vanitaspy import User
 
 fk = User()
 
