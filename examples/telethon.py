@@ -18,9 +18,10 @@ vanitas_db = db.vanitas
 # telethon client
 telethn = TelegramClient("telethn", API_ID, API_HASH).start(bot_token=TOKEN)
 
-us = User()
+
 # user check
 def banned(user):
+    us = User()
     chk = us.get_info(user)
     if chk["blacklisted"]:
         return True
