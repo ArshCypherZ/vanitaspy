@@ -22,10 +22,7 @@ us = User()
 # user check
 def banned(user):
     chk = us.get_info(user)
-    if chk["blacklisted"]:
-        return True
-    if not chk["blacklisted"]:
-        return False
+    return bool(chk["blacklisted"])
 
 # handlers
 HLRS = re.compile("(?i)(on|off|enable|disable)")
