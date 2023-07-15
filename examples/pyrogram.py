@@ -17,15 +17,12 @@ app = Client("vanitas", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 # mongodb
 mongo = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 db = mongo["vanitas"]
-
+us = User()
 # user check
 def banned(user):
-    us = User()
+    
     chk = us.get_info(user)
-    if chk["blacklisted"]:
-        return True
-    if not chk["blacklisted"]:
-        return False
+    return bool(chk["blacklisted"])
 
 # handlers
 HLRS = re.compile("(?i)(on|off|enable|disable)")
