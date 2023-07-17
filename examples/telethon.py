@@ -1,6 +1,7 @@
 import re
 
 from telethon import events, TelegramClient
+from telethon.tl.functions.channels import GetParticipantRequest
 from motor import motor_asyncio
 from vanitaspy import User
 
@@ -32,6 +33,21 @@ HLRS = re.compile("(?i)(on|off|enable|disable)")
 OFF = re.compile("(?i)(off|disable)")
 ON = re.compile("(?i)(on|enable)")
 
+# permission check
+async def can_ban_users(event, user_id):
+    try:
+        p = await telethn(GetParticipantRequest(event.chat_id, user_id))
+    except UserNotParticipantError:
+        return False
+    if (isinstance(p.participant, types.ChannelParticipantCreator)):
+        return True
+    if isinstance(p.participant, types.ChannelParticipantAdmin):
+        if not p.participant.admin_rights.ban_users:
+            await event.reply("You need to be an admin with ban rights!")
+            return False
+        return True
+    await event.reply("Be an admin first.")
+    return False
 
 @telethn.on(events.NewMessage(pattern="^[/!](?i)antispam ?(.*)"))
 async def vanitas_handerl(van):
@@ -67,7 +83,6 @@ async def chk_(event):
         if banned(event.user_id):
             try:
                 await telethn.edit_permissions(event.chat_id, event.user_id, view_messages=False)
-                us = User()
                 chec = us.get_info(event.user_id)
                 txt = f"**This user has been blacklisted in Vanitas Antispam System**\n"
                 txt += f"**Reason:** `{chec['reason']}`\n"

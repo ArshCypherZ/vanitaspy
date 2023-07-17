@@ -17,10 +17,11 @@ app = Client("vanitas", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 # mongodb
 mongo = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 db = mongo["vanitas"]
+
 us = User()
+
 # user check
 def banned(user):
-    
     chk = us.get_info(user)
     return bool(chk["blacklisted"])
 
@@ -74,7 +75,6 @@ async def check_user(client, chat_action):
             if banned(member.id):
                 try:
                     await client.restrict_chat_member(chat_id, member.id, can_send_messages=False)
-                    us = User()
                     chec = us.get_info(member.id)
                     txt = f"**This user has been blacklisted in Vanitas Antispam System**\n"
                     txt += f"**Reason:** `{chec['reason']}`\n"
